@@ -8,7 +8,9 @@ class Orders(SQLModel, table=True):
     quantity: int = Field(default=1)
 
 
-DATABASE_URL = "postgresql://postgres:postgres@db/order_db"
+#DATABASE_URL = "postgresql://postgres:postgres@db/order_db"
+# for localhost
+DATABASE_URL = "postgresql://petbell:i12pose@localhost/order_db"
 engine = create_engine(DATABASE_URL, echo=True)
 
 def get_session():
@@ -51,3 +53,10 @@ async def get_orders(session: sessionDep):
         return orders
     else:
         return{"message": "Orders not found"}
+
+@app.post('/orders')
+async def create_order(order: Orders, session: sessionDep):
+    session.add(order)
+    session.commit()
+    session.refresh(order)
+    return {"message" : order}
