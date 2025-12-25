@@ -186,3 +186,5 @@ terraform.rc
 
 # Lock file (optional: include if you're working in a team to pin provider versions)
 .terraform.lock.hcl
+
+dockerdummy
